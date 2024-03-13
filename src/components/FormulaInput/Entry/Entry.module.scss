@@ -1,0 +1,37 @@
+.wrapper{
+  border: 1px solid rgb(209 216 224);
+  border-radius: 0.25em;
+  background-color:  rgb(0 17 51 / 0.1);
+  font-size: 0.85em;
+  font-weight: 500;
+  padding: 0.25em 0.5em;
+  display: flex;
+  align-items: center;
+  & > span{
+    line-height: 1em;
+    vertical-align: middle;
+  }
+}
+
+.delimiter{
+  width: 1px;
+  background-color: rgb(0 17 51 / 0.3);
+  height: 1.25em;
+  margin: 0 0.5em;
+}
+
+.editable{
+  font-size: 0.75em;
+  color: rgba(81, 81, 82, 0.7);
+  cursor: pointer;
+  &:hover{
+    color: #000;
+  }
+  & > input{
+    width: 50px;
+    padding: 2px 4px;
+    font-size: 1.15em;
+    border: 1px solid rgba(81, 81, 82, 0.7);
+    border-radius: 4px;
+  }
+}

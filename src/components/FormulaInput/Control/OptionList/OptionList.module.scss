@@ -1,0 +1,18 @@
+
+.options{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 0.35em;
+  border-radius: 0.5em;
+  max-height: 242px;
+  overflow-y: scroll;
+  font-size: 0.75rem;
+}
+
+.error{
+  color: #e77676;
+  white-space: nowrap;
+}

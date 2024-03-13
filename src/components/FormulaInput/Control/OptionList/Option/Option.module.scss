@@ -1,0 +1,21 @@
+
+.option{
+  cursor: pointer;
+  padding: 0.75em;
+  border-radius: 0.25em;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2em;
+  white-space: nowrap;
+  & > span{
+    text-transform: capitalize;
+  }
+}
+
+
+.selected{
+background-color: rgb(183 224 255);
+}
