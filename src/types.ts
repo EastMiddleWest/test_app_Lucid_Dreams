@@ -20,6 +20,4 @@ export type Character = {
   value: string
 }
 
-//type EntryType = 'record' | 'cursor' | 'character'
-
 export type FormulaValue = Record | Cursor | Character
