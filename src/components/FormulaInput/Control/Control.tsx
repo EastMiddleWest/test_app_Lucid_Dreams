@@ -8,11 +8,15 @@ import { filterCharecters } from "@/utilities/filterCharacters";
 
 
 const Control = () => {
-  
-  const { values, addEntry, addOption,removeEntry, removeCursor, replaceCursor} = useFormula();
+
+  const { values, addEntry, addOption,removeEntry, removeCursor, replaceCursor, calculeteResult} = useFormula();
   const {options, filter, selected, setFilter, setSelectedValue} = useOptions()
 
   const word = React.useRef("");
+
+  React.useEffect(() =>{
+    return () => setFilter('')
+  },[setFilter])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lastCharecter = e.target.value;
@@ -30,26 +34,41 @@ const Control = () => {
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { key } = e;
-    if (key === "Backspace" || key === "Delete") {
-      word.current = filterCharecters(values, -1);
-      if (word.current.length > 1) setFilter(word.current);
-      else setFilter("");
-      removeEntry();
-    }
-    else if(key === 'ArrowLeft' || key === 'ArrowRight'){
-      const direction = key === 'ArrowLeft' ? 'left' : 'right'
-      replaceCursor(direction)
-    }
-    else if(key === 'ArrowUp'){
-      setSelectedValue(selected.value-1)
-    }
-    else if(key == 'ArrowDown'){
-      setSelectedValue(selected.value+1)
-    }
-    else if(key === 'Enter'){
-      if(filter){
-        addOption({...options[selected.value], type: 'record'}, filter.length)
+    switch (key) {
+      case "Delete":
+      case "Backspace": {
+        word.current = filterCharecters(values, -1);
+        if (word.current.length > 1) setFilter(word.current);
+        else setFilter("");
+        removeEntry();
+        return
+      }
+      case "ArrowRight":
+      case "ArrowLeft":{
+        const direction = key === 'ArrowLeft' ? 'left' : 'right'
+        replaceCursor(direction)
         setFilter('')
+        return
+      }
+      case 'ArrowUp':{
+        setSelectedValue(selected.value-1)
+        return
+      }
+      case 'ArrowDown':{
+        setSelectedValue(selected.value+1)
+        return
+      }
+      case 'Enter':{
+        if(filter){
+          if(options.length > 0){
+            addOption({...options[selected.value], type: 'record'}, filter.length)
+            setFilter('')
+          }
+        }
+        else{
+          calculeteResult()
+        }
+        return
       }
     }
   };
@@ -74,3 +93,4 @@ const Control = () => {
 };
 
 export default Control;
+

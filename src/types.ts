@@ -20,4 +20,6 @@ export type Character = {
   value: string
 }
 
+export type FormulaEror = '#ERROR'
+
 export type FormulaValue = Record | Cursor | Character

@@ -1,0 +1,24 @@
+
+@mixin btn{
+  display: grid;
+  place-content: center;
+  padding: 0.25em;
+  cursor: pointer;
+}
+
+.btn{
+  &-closed{
+    @include btn;
+    & > img{
+      transform: rotate(0deg);
+      transition: all 0.2s;
+    }
+  }
+  &-open{
+    @include btn;
+    & > img{
+      transform: rotate(-90deg);
+      transition: all 0.2s;
+    }
+  }
+}

@@ -1,16 +1,48 @@
+@mixin container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
 .wrapper{
   background-color:  rgb(246 248 250);
-  padding: 1em;
-  border-radius: 0.5em;
+  border-radius: 0.35em;
   border: 1px solid #edf0f2;
+  width: 350px
+}
+
+.container{
+  &-opened{
+    @include container;
+    height: 82px;
+    padding: 1em;
+  }
+  &-closed{
+    @include container;
+    height: 0px;
+    padding: 0 1em;
+    overflow: hidden;
+  }
+}
+
+.head{
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 1em;
+  font-size: 0.8em;
+  font-weight: 500;
+  background-color: rgb(0 17 51 / 0.1);
 }
 
 .input{
-  min-width: 250px;
+  flex-grow: 1;
   padding: 1em 0.5em;
   background-color: #fff;
   border: 1px solid #edf0f2;
-  border-radius: 0.5em;
+  border-radius: 0.25em;
   position: relative;
 }
 
@@ -23,4 +55,9 @@
     padding: 3px;
     height: 1.5em;
   }
+}
+
+.result{
+  padding: 0.5em;
+  font-size: 1.75em;
 }

@@ -1,15 +1,19 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid';
-import type { FormulaValue, Record, Option } from '@/types'
+import type { FormulaValue, Record, Option, FormulaEror } from '@/types'
+
+import { calculate } from '@/utilities/calculate';
 
 type FormulaState = {
+  result: number | FormulaEror
   values: FormulaValue[];
   setCursor: (index: number) => void;
   removeCursor: () => void;
   removeEntry: () => void;
   addEntry: (character: string) => void;
   addOption: (option: Record, offset: number) => void;
-  replaceCursor: (direction: 'left' | 'right') => void
+  replaceCursor: (direction: 'left' | 'right') => void;
+  calculeteResult: () => void
 }
 
 type OptionState = {
@@ -27,6 +31,7 @@ type OptionState = {
 
 
 export const useFormula = create<FormulaState>((set) => ({
+  result: 0,
   values: [],
   setCursor: (index) => set(state =>{
     const values = [...state.values]
@@ -76,6 +81,11 @@ export const useFormula = create<FormulaState>((set) => ({
       values[cursorIndex] = replacedEl
       return {values}
     }
+  }),
+  calculeteResult: () => set(state => {
+    if(state.values.length === 1) return {result: 0}
+    const result = calculate(state.values)
+    return {result}
   })
 }))
 

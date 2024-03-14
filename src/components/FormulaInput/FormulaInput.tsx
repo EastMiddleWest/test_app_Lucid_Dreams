@@ -3,13 +3,16 @@ import styles from "./FormulaInput.module.scss";
 
 import Entry from "./Entry/Entry";
 import Control from "./Control/Control";
+import ToggleButton from "./ToggleButton/ToggleButton";
 
 import { useFormula } from "@/store/store";
 import type { FormulaValue } from "@/types";
 
 const FormulaInput = () => {
 
-  const { values, setCursor } = useFormula();
+  const { values, setCursor, result } = useFormula(state => ({values: state.values, setCursor: state.setCursor, result: state.result}));
+
+  const [isInputOpen, setisInputOpen] = React.useState(true)
 
   const toggleEditable = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.target as HTMLElement;
@@ -29,18 +32,30 @@ const FormulaInput = () => {
     else return <Entry {...el} />;
   };
 
+
   return (
     <div className={styles.wrapper}>
-      <h3>Formula</h3>
-      <div className={styles.input} onClick={(e) => toggleEditable(e)}>
-        <ul className={styles.line} data-index={values.length - 1}>
-          <li key="space"> </li>
-          {values.map((el, i) => (
-            <li key={el.id} data-index={i}>
-              {render(el)}
-            </li>
-          ))}
-        </ul>
+      <div className={styles.head}>
+        <ToggleButton isOpen={isInputOpen} toggleOpen={() => setisInputOpen(prev => !prev)} />
+        <p>New Formula</p>
+      </div>
+      <div className={styles.result}>
+        {
+          result === '#ERROR' ? <span>{result}</span>
+          : <span>{result}</span>
+        }
+      </div>
+      <div className={isInputOpen ? styles['container-opened'] : styles['container-closed']}>
+        <div className={styles.input} onClick={(e) => toggleEditable(e)}>
+          <ul className={styles.line} data-index={values.length - 1}>
+            <li key="space"> </li>
+            {values.map((el, i) => (
+              <li key={el.id} data-index={i}>
+                {render(el)}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
